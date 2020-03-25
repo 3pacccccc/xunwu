@@ -22,7 +22,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements Application
     @Value("${spring.thymeleaf.cache}")
     private boolean thymeleafCacheEnable = true;
 
-    @Autowired
     private ApplicationContext applicationContext;
 
     @Override
@@ -30,13 +29,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements Application
         this.applicationContext = applicationContext;
     }
 
-    // 静态资源加载配置
+    /**
+     * 静态资源加载配置
+     */
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static");
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
-        /**
+    /**
      * 模板资源解析器
      * @return
      */
@@ -60,9 +61,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements Application
         // 支持Spring EL表达式
         templateEngine.setEnableSpringELCompiler(true);
 
-//        // 支持SpringSecurity方言
-//        SpringSecurityDialect securityDialect = new SpringSecurityDialect();
-//        templateEngine.addDialect(securityDialect);
+        // 支持SpringSecurity方言
+        SpringSecurityDialect securityDialect = new SpringSecurityDialect();
+        templateEngine.addDialect(securityDialect);
         return templateEngine;
     }
 
